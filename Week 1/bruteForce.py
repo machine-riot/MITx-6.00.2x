@@ -21,9 +21,9 @@ def maxVal(toConsider, avail):
         # Explore right branch
         withoutVal, withoutToTake = maxVal(toConsider[1:], avail)
         # Explore better branch
-    if withVal > withoutVal:
-        result = (withVal, withToTake + (nextItem,))
-    else:
-        result = (withoutVal, withoutToTake)
+        if withVal > withoutVal:
+            result = (withVal, withToTake + (nextItem,))
+        else:
+            result = (withoutVal, withoutToTake)
 
     return result
