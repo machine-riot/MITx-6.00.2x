@@ -79,4 +79,50 @@ def buildCityGraph(graphType):
     g.addEdge(Edge(g.getNode('Los Angeles'), g.getNode('Boston')))
     return g
 
-print(buildCityGraph(Digraph))
+#print(buildCityGraph(Digraph))
+
+def printPath(path):
+    """Assumes path is a list of nodes"""
+    result = ''
+    for i in range(len(path)):
+        result = result + str(path[i])
+        if i != len(path) - 1:
+            result = result + '->'
+    return result
+
+def DFS(graph, start, end, path, shortest):
+    path = path + [start]
+    if start == end:
+        return path
+    for node in graph.childrenOf(start):
+        if node not in path: #avoid cycles
+            if shortest == None of len(path) < len(shortest):
+                newPath = DFS(graph, node, end, path, shortest, toPrint)
+                if newPath != None:
+                    shortest = newPath
+    return shortest
+
+def BFS(graph, start, end, toPrint = False):
+    initPath = [start]
+    pathQueue = [initPath]
+    if toPrint:
+        print('Current BFS path:', printPath(pathQueue))
+    while len(pathQueue) != 0:
+        #Get and remove oldest element in pathQueue
+        tmpPath = pathQueue.pop(0)
+        print('Current BFS path:', printPath(tmpPath))
+        lastNode = tmpPath[-1]
+        if lastNode == end:
+            return tmpPath
+        for nextNode in graph.childrenOf(lastNode):
+            if nextNode not in tmpPath:
+                newPath = tmpPath + [nextNode]
+                pathQueue.append(newPath)
+    return None
+
+#DFS is called from a wrapper function that has 2 fewer arguments than DFS;
+#A client that wants to find a path between nodes should only have to worry
+#about the graph and those two nodes. The argument path and shortest in DFS are
+#artifacts of the algorithm
+def shortestPath(graph, start, end):
+    return DFS(graph, start, end, [], None)
